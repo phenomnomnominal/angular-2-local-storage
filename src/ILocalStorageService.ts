@@ -5,6 +5,7 @@ interface ILocalStorageService {
     isSupported: boolean;
 
     // Functions:
+    bind (): void;
     clearAll (regularExpression: string): boolean;
     deriveKey (key: string): string;
     get (key: string): any;

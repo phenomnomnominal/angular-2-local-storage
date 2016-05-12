@@ -75,6 +75,12 @@ export class LocalStorageService {
         return this.set(key, value);
     }
 
+    public bind (): void {
+        if (console && console.warn) {
+            console.warn(`This function doesn’t work with Angular 2.`);
+        }
+    }
+
     public clearAll (regularExpression: string): boolean {
         // Setting both regular expressions independently
         // Empty strings result in catchall RegExp
