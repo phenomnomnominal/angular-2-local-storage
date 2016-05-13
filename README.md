@@ -4,7 +4,7 @@ LocalStorageService for Angular 2 with mostly the same API (and most of the code
 
 ## Differences:
 
-* No events broadcast on $rootScope - ILocalStorageServiceConfigOptions takes `onError`, `onRemoveItem`, `onSetItem` and `onWarning` if you really need something to happen when something happens.
+* No events broadcast on $rootScope - LocalStorageService exposes observables for `errors$`, `removeItems$`, `setItems$` and `warning$` if you really need something to happen when something happens.
 * The `bind` function doesn't work anymore (there is a stub so this can still be a drop-in, but it'll do nothing).
 
 ## Usage:
@@ -12,8 +12,9 @@ LocalStorageService for Angular 2 with mostly the same API (and most of the code
 First you need to configure the service:
 
 ```typescript
-import ILocalStorageServiceConfigOptions from './app/shared/ILocalStorageServiceConfigOptions';
-import { LOCAL_STORAGE_SERVICE_CONFIG_OPTIONS } from './app/shared/LocalStorageServiceConfigOptions';
+import ILocalStorageServiceConfigOptions from './ILocalStorageServiceConfigOptions';
+import { LOCAL_STORAGE_SERVICE_CONFIG_OPTIONS } from './LocalStorageServiceConfigOptions';
+import { LocalStorageService } from './LocalStorageService';
 
 // Create config options (see ILocalStorageServiceConfigOptions) for deets:
 let localStorageServiceConfig: ILocalStorageServiceConfigOptions = {
@@ -26,7 +27,7 @@ const LOCAL_STORAGE_CONFIG_PROVIDER: Provider = provide(LOCAL_STORAGE_SERVICE_CO
 });
 
 // Use the provider:
-bootstrap(AppComponent, [LOCAL_STORAGE_CONFIG_PROVIDER]);
+bootstrap(AppComponent, [LOCAL_STORAGE_CONFIG_PROVIDER, LocalStorageService]);
 ```
 
 Then you can use it in a component:
@@ -35,7 +36,7 @@ Then you can use it in a component:
 import { LocalStorageService } from './shared/LocalStorageService';
 
 @Component({
-    providers: [LocalStorageService]
+    // ...
 })
 export class SomeComponent {
     constructor (

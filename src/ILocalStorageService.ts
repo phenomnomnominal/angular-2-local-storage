@@ -1,11 +1,18 @@
 'use strict';
 
+import { Observable } from 'rxjs/Rx';
+
 interface ILocalStorageService {
     // Properties:
     isSupported: boolean;
 
+    // Events:
+    errors$: Observable<string>;
+    removeItems$: Observable<string>;
+    setItems$: Observable<string>;
+    warnings$: Observable<string>;
+
     // Functions:
-    bind (): void;
     clearAll (regularExpression: string): boolean;
     deriveKey (key: string): string;
     get (key: string): any;
@@ -14,7 +21,7 @@ interface ILocalStorageService {
     length (): number;
     remove (...keys: Array<string>): boolean;
     set (key: string, value: any): boolean;
-    // bind: bindToScope,
+    bind (): void;
 
     // Deprecated:
     add (key: string, value: any): boolean;

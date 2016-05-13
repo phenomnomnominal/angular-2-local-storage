@@ -6,7 +6,8 @@ import ILocalStorageServiceConfigOptions from './ILocalStorageServiceConfigOptio
 import INotifyOptions from './INotifyOptions';
 
 // Angular:
-import { Inject, Injectable } from '@angular/core';
+import { Inject } from '@angular/core';
+import { Observable, Subscriber } from 'rxjs/Rx';
 
 // Dependencies:
 import { LOCAL_STORAGE_SERVICE_CONFIG_OPTIONS } from './LocalStorageServiceConfigOptions';
@@ -14,11 +15,14 @@ import { LOCAL_STORAGE_SERVICE_CONFIG_OPTIONS } from './LocalStorageServiceConfi
 // Constants:
 const DEPRECATED: string = 'This function is deprecated.';
 const LOCAL_STORAGE_NOT_SUPPORTED: string = 'LOCAL_STORAGE_NOT_SUPPORTED';
-const NO_OP = () => {};
 
-@Injectable()
 export class LocalStorageService {
     public isSupported: boolean = false;
+
+    public errors$: Observable<string>;
+    public removeItems$: Observable<ILocalStorageEvent>;
+    public setItems$: Observable<ILocalStorageEvent>;
+    public warnings$: Observable<string>;
 
     private notifyOptions: INotifyOptions = {
         setItem: false,
@@ -28,16 +32,15 @@ export class LocalStorageService {
     private storageType: 'sessionStorage' | 'localStorage' = 'localStorage';
     private webStorage: Storage;
 
-    private onError: (message: string) => void = NO_OP;
-    private onRemoveItem: (event: ILocalStorageEvent) => void = NO_OP;
-    private onSetItem: (event: ILocalStorageEvent) => void = NO_OP;
-    private onWarning: (message: string) => void = NO_OP;
+    private errors: Subscriber<string>;
+    private removeItems: Subscriber<ILocalStorageEvent>;
+    private setItems: Subscriber<ILocalStorageEvent>;
+    private warnings: Subscriber<string>;
 
     constructor (
         @Inject(LOCAL_STORAGE_SERVICE_CONFIG_OPTIONS) config: ILocalStorageServiceConfigOptions
     ) {
         let { notifyOptions, prefix, storageType } = config;
-        let { onError, onRemoveItem, onSetItem, onWarning } = config;
 
         if (notifyOptions != null) {
             let { setItem, removeItem } = notifyOptions;
@@ -50,18 +53,10 @@ export class LocalStorageService {
             this.setStorageType(storageType);
         }
 
-        if (onError) {
-            this.onError = onError;
-        }
-        if (onRemoveItem) {
-            this.onRemoveItem = onRemoveItem;
-        }
-        if (onSetItem) {
-            this.onSetItem = onSetItem;
-        }
-        if (onWarning) {
-            this.onWarning = onWarning;
-        }
+        this.errors$ = new Observable<string>((observer: Subscriber<string>) => this.errors = observer).share();
+        this.removeItems$ = new Observable<ILocalStorageEvent>((observer: Subscriber<ILocalStorageEvent>) => this.removeItems = observer).share();
+        this.setItems$ = new Observable<ILocalStorageEvent>((observer: Subscriber<ILocalStorageEvent>) => this.setItems = observer).share();
+        this.warnings$ = new Observable<string>((observer: Subscriber<string>) => this.warnings = observer).share();
 
         this.isSupported = this.checkSupport();
     }
@@ -75,12 +70,6 @@ export class LocalStorageService {
         return this.set(key, value);
     }
 
-    public bind (): void {
-        if (console && console.warn) {
-            console.warn(`This function doesn’t work with Angular 2.`);
-        }
-    }
-
     public clearAll (regularExpression: string): boolean {
         // Setting both regular expressions independently
         // Empty strings result in catchall RegExp
@@ -88,7 +77,7 @@ export class LocalStorageService {
         let testRegex = !!regularExpression ? new RegExp(regularExpression) : new RegExp('');
 
         if (!this.isSupported) {
-            this.onWarning(LOCAL_STORAGE_NOT_SUPPORTED);
+            this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
             return false;
         }
 
@@ -100,7 +89,7 @@ export class LocalStorageService {
                 try {
                     this.remove(key.substr(prefixLength));
                 } catch (e) {
-                    this.onError(e.message);
+                    this.errors.next(e.message);
                     return false;
                 }
             }
@@ -114,7 +103,7 @@ export class LocalStorageService {
 
     public get (key: string): any {
         if (!this.isSupported) {
-            this.onWarning(LOCAL_STORAGE_NOT_SUPPORTED);
+            this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
             return false;
         }
 
@@ -137,7 +126,7 @@ export class LocalStorageService {
 
     public keys (): Array<string> {
         if (!this.isSupported) {
-            this.onWarning(LOCAL_STORAGE_NOT_SUPPORTED);
+            this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
             return [];
         }
 
@@ -149,7 +138,7 @@ export class LocalStorageService {
                 try {
                     keys.push(key.substr(prefixLength));
                 } catch (e) {
-                    this.onError(e.message);
+                    this.errors.next(e.message);
                     return [];
                 }
             }
@@ -172,20 +161,20 @@ export class LocalStorageService {
         let result = true;
         keys.forEach((key: string) => {
             if (!this.isSupported) {
-                this.onWarning(LOCAL_STORAGE_NOT_SUPPORTED);
+                this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
                 result = false;
             }
 
             try {
                 this.webStorage.removeItem(this.deriveKey(key));
                 if (this.notifyOptions.removeItem) {
-                    this.onRemoveItem({
+                    this.removeItems.next({
                         key: key,
                         storageType: this.storageType
                     });
                 }
             } catch (e) {
-                this.onError(e.message);
+                this.errors.next(e.message);
                 result = false;
             }
         });
@@ -201,7 +190,7 @@ export class LocalStorageService {
         }
 
         if (!this.isSupported) {
-            this.onWarning(LOCAL_STORAGE_NOT_SUPPORTED);
+            this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
             return false;
         }
 
@@ -210,14 +199,14 @@ export class LocalStorageService {
                 this.webStorage.setItem(this.deriveKey(key), value);
             }
             if (this.notifyOptions.setItem) {
-                this.onSetItem({
+                this.setItems.next({
                     key: key,
                     newvalue: value,
                     storageType: this.storageType
                 });
             }
         } catch (e) {
-            this.onError(e.message);
+            this.errors.next(e.message);
             return false;
         }
         return true;
@@ -244,7 +233,7 @@ export class LocalStorageService {
 
             return supported;
         } catch (e) {
-            this.onError(e.message);
+            this.errors.next(e.message);
             return false;
         }
     }
