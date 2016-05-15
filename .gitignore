@@ -1,0 +1,6 @@
+.idea/
+lib/I*
+node_modules/
+npm-debug.log
+src/*.js
+typings/

@@ -13,7 +13,7 @@ First you need to configure the service:
 
 ```typescript
 import ILocalStorageServiceConfigOptions from './ILocalStorageServiceConfigOptions';
-import { LOCAL_STORAGE_SERVICE_CONFIG_OPTIONS } from './LocalStorageServiceConfigOptions';
+import { LOCAL_STORAGE_SERVICE_CONFIG } from './LocalStorageServiceConfigOptions';
 import { LocalStorageService } from './LocalStorageService';
 
 // Create config options (see ILocalStorageServiceConfigOptions) for deets:
@@ -22,7 +22,7 @@ let localStorageServiceConfig: ILocalStorageServiceConfigOptions = {
     storageType: 'sessionStorage'
 };
 // Provide the config to the service:
-const LOCAL_STORAGE_CONFIG_PROVIDER: Provider = provide(LOCAL_STORAGE_SERVICE_CONFIG_OPTIONS, {
+const LOCAL_STORAGE_CONFIG_PROVIDER: Provider = provide(LOCAL_STORAGE_SERVICE_CONFIG, {
     useValue: localStorageServiceConfig
 });
 

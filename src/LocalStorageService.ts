@@ -2,7 +2,7 @@
 
 // Interfaces:
 import ILocalStorageEvent from './ILocalStorageEvent';
-import ILocalStorageServiceConfigOptions from './ILocalStorageServiceConfigOptions';
+import ILocalStorageServiceConfig from './ILocalStorageServiceConfig';
 import INotifyOptions from './INotifyOptions';
 
 // Angular:
@@ -10,7 +10,7 @@ import { Inject } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs/Rx';
 
 // Dependencies:
-import { LOCAL_STORAGE_SERVICE_CONFIG_OPTIONS } from './LocalStorageServiceConfigOptions';
+import { LOCAL_STORAGE_SERVICE_CONFIG } from './LocalStorageServiceConfig';
 
 // Constants:
 const DEPRECATED: string = 'This function is deprecated.';
@@ -38,7 +38,7 @@ export class LocalStorageService {
     private warnings: Subscriber<string>;
 
     constructor (
-        @Inject(LOCAL_STORAGE_SERVICE_CONFIG_OPTIONS) config: ILocalStorageServiceConfigOptions
+        @Inject(LOCAL_STORAGE_SERVICE_CONFIG) config: ILocalStorageServiceConfig
     ) {
         let { notifyOptions, prefix, storageType } = config;
 
@@ -47,7 +47,7 @@ export class LocalStorageService {
             this.setNotify(setItem, removeItem);
         }
         if (prefix != null) {
-           this.setPrefix(prefix);
+            this.setPrefix(prefix);
         }
         if (storageType != null) {
             this.setStorageType(storageType);
@@ -131,7 +131,7 @@ export class LocalStorageService {
         }
 
         let prefixLength = this.prefix.length;
-        let keys = [];
+        let keys: Array<string> = [];
         for (let key in this.webStorage) {
             // Only return keys that are for this app
             if (key.substr(0, prefixLength) === this.prefix) {
@@ -215,7 +215,7 @@ export class LocalStorageService {
     private checkSupport (): boolean {
         try {
             let supported = this.storageType in window
-                         && window[this.storageType] !== null;
+                          && window[this.storageType] !== null;
 
             if (supported) {
                 this.webStorage = window[this.storageType];

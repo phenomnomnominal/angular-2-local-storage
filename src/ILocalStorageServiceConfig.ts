@@ -3,11 +3,11 @@
 // Interfaces:
 import INotifyOptions from './INotifyOptions';
 
-interface ILocalStorageServiceConfigOptions {
+interface ILocalStorageServiceConfig {
     // Properties:
     notifyOptions?: INotifyOptions;
     prefix?: string;
     storageType?: 'sessionStorage' | 'localStorage';
 }
 
-export default ILocalStorageServiceConfigOptions;
+export default ILocalStorageServiceConfig;

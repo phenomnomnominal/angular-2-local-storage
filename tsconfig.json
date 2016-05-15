@@ -1,0 +1,23 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "mapRoot": "../lib/",
+    "module": "amd",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noImplicitAny": false,
+    "out": "lib/angular-2-local-storage.js",
+    "rootDir": "src/",
+    "sourceMap": true,
+    "target": "es5",
+    "inlineSources": false
+  },
+
+  "files": [
+    "src/angular-2-local-storage.ts",
+    "src/typings.d.ts"
+  ]
+}
