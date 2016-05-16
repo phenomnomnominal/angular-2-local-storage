@@ -14,7 +14,13 @@ LocalStorageService for Angular 2 with mostly the same API (and most of the code
 Add the following to the `map`:
 
 ```
-'angular-2-local-storage': 'vendor/angular-2-local-storage/dist/'
+'angular-2-local-storage': 'vendor/angular-2-local-storage/dist'
+```
+
+And the following to the `paths`:
+
+```
+'angular-2-local-storage': { defaultExtension: 'js' }
 ```
 
 ### In your app:
