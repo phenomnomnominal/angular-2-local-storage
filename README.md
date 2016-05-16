@@ -28,7 +28,7 @@ And the following to the `paths`:
 First you need to configure the service:
 
 ```typescript
-import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from './LocalStorageService';
+import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage/angular-2-local-storage';
 
 // Create config options (see ILocalStorageServiceConfigOptions) for deets:
 let localStorageServiceConfig = {
