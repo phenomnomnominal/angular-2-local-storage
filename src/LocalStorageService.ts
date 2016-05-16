@@ -101,10 +101,10 @@ export class LocalStorageService {
         return `${this.prefix}${key}`;
     }
 
-    public get (key: string): any {
+    public get <T> (key: string): T {
         if (!this.isSupported) {
             this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
-            return false;
+            return null;
         }
 
         let item = this.webStorage ? this.webStorage.getItem(this.deriveKey(key)) : null;

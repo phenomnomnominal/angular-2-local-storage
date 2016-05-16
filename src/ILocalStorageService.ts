@@ -15,7 +15,7 @@ interface ILocalStorageService {
     // Functions:
     clearAll (regularExpression: string): boolean;
     deriveKey (key: string): string;
-    get (key: string): any;
+    get <T> (key: string): T;
     getStorageType (): string;
     keys (): Array<string>;
     length (): number;
