@@ -1,12 +1,21 @@
 {
   "name": "angular-2-local-storage",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "LocalStorageService for Angular 2 with mostly the same API (and most of the code) from angular-local-storage",
-  "main": "dist/angular-2-local-storage.js",
+  "main": "index.js",
+  "typings": "index.d.ts",
   "scripts": {
-    "compile": "tsc"
+    "compile": "rimraf ./dist && tsc",
+    "postinstall": "typings install",
+    "publish": "rimraf ./dist && tsc && cp-cli ./package.json ./dist/package.json && cp-cli ./README.md ./dist/README.md && cp-cli ./.npmignore ./dist/.npmignore && cd ./dist && npm publish"
   },
   "author": "Craig Spence <craigspence0@gmail.com>",
+  "contributors": [
+    {
+      "name": "Elwyn Benson",
+      "email": "elwyn@L1.co.nz"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/phenomnomnominal/angular-2-local-storage.git"
@@ -17,8 +26,11 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@angular/core": "2.0.0-rc.1",
-    "rxjs": "5.0.0-beta.6",
-    "typescript": "1.8.10"
+    "@angular/core": "2.0.0-rc.4",
+    "cp-cli": "1.0.2",
+    "rimraf": "2.5.4",
+    "rxjs": "5.0.0-beta.10",
+    "typescript": "1.8.10",
+    "typings": "1.3.2"
   }
 }

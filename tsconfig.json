@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "declaration": false,
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "mapRoot": "../dist/",
@@ -10,14 +10,14 @@
     "noEmitOnError": true,
     "noImplicitAny": false,
     "outDir": "dist/",
-    "rootDir": "src/",
+    "rootDir": ".",
     "sourceMap": true,
     "target": "es5",
     "inlineSources": false
   },
 
   "files": [
-    "src/angular-2-local-storage.ts",
-    "src/typings.d.ts"
+    "./index.ts",
+    "./typings.d.ts"
   ]
 }
