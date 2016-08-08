@@ -1,7 +1,1 @@
-.gitignore
-.idea/
-dist/I*
-src/
-typings/
-tsconfig.json
-typings.json
+npm-debug.log

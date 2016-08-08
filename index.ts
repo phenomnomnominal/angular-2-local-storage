@@ -1,0 +1,1 @@
+export { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from './src/angular-2-local-storage'
