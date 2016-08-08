@@ -244,7 +244,7 @@ export class LocalStorageService {
         // If there is a prefix set in the config let's use that with an appended
         // period for readability:
         const PERIOD: string = '.';
-        if (this.prefix && this.prefix.endsWith(PERIOD)) {
+        if (this.prefix && !this.prefix.endsWith(PERIOD)) {
             this.prefix = !!this.prefix ? `${this.prefix}${PERIOD}` : '';
         }
     }
