@@ -7,6 +7,10 @@ LocalStorageService for Angular 2 with mostly the same API (and most of the code
 * No events broadcast on $rootScope - LocalStorageService exposes observables for `errors$`, `removeItems$`, `setItems$` and `warning$` if you really need something to happen when something happens.
 * The `bind` function doesn't work anymore (there is a stub so this can still be a drop-in, but it'll do nothing).
 
+## Install:
+
+`npm install angular-2-local-storage`
+
 ## Usage:
 
 ### With SystemJS:
