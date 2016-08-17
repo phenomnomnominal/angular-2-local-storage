@@ -13,13 +13,19 @@ LocalStorageService for Angular 2 with mostly the same API (and most of the code
 
 ## Usage:
 
-### With SystemJS:
-
-Nothing to configure, just import as normal.
-
 ### With angular-cli:
 
-Add the following to `vendorNpmFiles` in the `angular-cli-build.js`:
+Add the following to your `map` and `packages` arrays in `src/system-config.ts`:
+```
+    const map: any = {
+        'angular-2-local-storage': 'vendor/angular-2-local-storage'
+    };
+	const packages: any = {
+        'angular-2-local-storage': { main: 'index.js', defaultExtension: 'js' }
+    };
+```
+
+And then add the following to `vendorNpmFiles` in `angular-cli-build.js`:
 ```
     vendorNpmFiles: [
         'angular-2-local-storage/**/*.js'
