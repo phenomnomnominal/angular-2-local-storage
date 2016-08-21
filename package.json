@@ -1,13 +1,11 @@
 {
   "name": "angular-2-local-storage",
-  "version": "0.0.12",
+  "version": "0.0.18",
   "description": "LocalStorageService for Angular 2 with mostly the same API (and most of the code) from angular-local-storage",
-  "main": "index.js",
-  "typings": "index.d.ts",
+  "main": "src/angular-2-local-storage.js",
+  "typings": "src/angular-2-local-storage.d.ts",
   "scripts": {
-    "compile": "rimraf ./dist && tsc",
-    "postinstall": "typings install",
-    "release": "rimraf ./dist && tsc && cp-cli ./package.json ./dist/package.json && cp-cli ./README.md ./dist/README.md && cp-cli ./.npmignore ./dist/.npmignore && cd ./dist && npm publish"
+    "compile": "tsc"
   },
   "author": "Craig Spence <craigspence0@gmail.com>",
   "contributors": [

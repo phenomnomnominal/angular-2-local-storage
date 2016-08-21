@@ -4,20 +4,20 @@
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "mapRoot": "../dist/",
+    "mapRoot": ".",
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,
     "noImplicitAny": false,
-    "outDir": "dist/",
-    "rootDir": ".",
+    "outDir": "./src",
+    "rootDir": "./src",
     "sourceMap": true,
     "target": "es5",
     "inlineSources": false
   },
 
   "files": [
-    "./index.ts",
+    "./src/angular-2-local-storage.ts",
     "./typings.d.ts"
   ]
 }
