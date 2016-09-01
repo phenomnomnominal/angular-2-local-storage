@@ -48,13 +48,23 @@ let localStorageServiceConfig = {
     prefix: 'my-app',
     storageType: 'sessionStorage'
 };
-// Provide the config to the service:
-const LOCAL_STORAGE_CONFIG_PROVIDER: Provider = provide(LOCAL_STORAGE_SERVICE_CONFIG, {
-    useValue: localStorageServiceConfig
-});
 
 // Use the provider:
-bootstrap(AppComponent, [LocalStorageService, LOCAL_STORAGE_CONFIG_PROVIDER]);
+@NgModule({
+    imports: [
+        ..
+    ],
+    declarations: [
+        ..
+    ],
+    providers: [
+        LocalStorageService,
+        {
+            provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: localStorageServiceConfig
+        }
+    ],
+    bootstrap: [AppComponent]
+})
 ```
 
 Then you can use it in a component:
