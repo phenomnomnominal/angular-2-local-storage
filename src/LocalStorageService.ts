@@ -32,10 +32,10 @@ export class LocalStorageService {
     private storageType: 'sessionStorage' | 'localStorage' = 'localStorage';
     private webStorage: Storage;
 
-    private errors: Subscriber<string>;
-    private removeItems: Subscriber<ILocalStorageEvent>;
-    private setItems: Subscriber<ILocalStorageEvent>;
-    private warnings: Subscriber<string>;
+    private errors: Subscriber<string> = new Subscriber<string>();
+    private removeItems: Subscriber<ILocalStorageEvent> = new Subscriber<ILocalStorageEvent>() ;
+    private setItems: Subscriber<ILocalStorageEvent> = new Subscriber<ILocalStorageEvent>();
+    private warnings: Subscriber<string> = new Subscriber<string>();
 
     constructor (
         @Inject(LOCAL_STORAGE_SERVICE_CONFIG) config: ILocalStorageServiceConfig
