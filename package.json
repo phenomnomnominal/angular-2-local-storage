@@ -2,8 +2,8 @@
   "name": "angular-2-local-storage",
   "version": "0.0.19",
   "description": "LocalStorageService for Angular 2 with mostly the same API (and most of the code) from angular-local-storage",
-  "main": "src/angular-2-local-storage.js",
-  "typings": "src/angular-2-local-storage.d.ts",
+  "main": "dist/angular-2-local-storage.js",
+  "typings": "dist/angular-2-local-storage.d.ts",
   "scripts": {
     "compile": "tsc"
   },
