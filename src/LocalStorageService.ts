@@ -7,7 +7,8 @@ import INotifyOptions from './INotifyOptions';
 
 // Angular:
 import { Inject } from '@angular/core';
-import { Observable, Subscriber } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Subscriber } from 'rxjs/Subscriber';
 
 // Dependencies:
 import { LOCAL_STORAGE_SERVICE_CONFIG } from './LocalStorageServiceConfig';
