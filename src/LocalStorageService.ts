@@ -9,6 +9,7 @@ import INotifyOptions from './INotifyOptions';
 import { Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
+import 'rxjs/add/operator/share';
 
 // Dependencies:
 import { LOCAL_STORAGE_SERVICE_CONFIG } from './LocalStorageServiceConfig';
