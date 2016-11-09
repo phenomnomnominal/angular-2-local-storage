@@ -1,6 +1,7 @@
 import ILocalStorageEvent from './ILocalStorageEvent';
 import ILocalStorageServiceConfig from './ILocalStorageServiceConfig';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/share';
 export declare class LocalStorageService {
     isSupported: boolean;
     errors$: Observable<string>;

@@ -13,7 +13,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 // Angular:
 var core_1 = require('@angular/core');
-var Rx_1 = require('rxjs/Rx');
+var Observable_1 = require('rxjs/Observable');
+var Subscriber_1 = require('rxjs/Subscriber');
+require('rxjs/add/operator/share');
 // Dependencies:
 var LocalStorageServiceConfig_1 = require('./LocalStorageServiceConfig');
 // Constants:
@@ -29,6 +31,10 @@ var LocalStorageService = (function () {
         };
         this.prefix = 'ls';
         this.storageType = 'localStorage';
+        this.errors = new Subscriber_1.Subscriber();
+        this.removeItems = new Subscriber_1.Subscriber();
+        this.setItems = new Subscriber_1.Subscriber();
+        this.warnings = new Subscriber_1.Subscriber();
         var notifyOptions = config.notifyOptions, prefix = config.prefix, storageType = config.storageType;
         if (notifyOptions != null) {
             var setItem = notifyOptions.setItem, removeItem = notifyOptions.removeItem;
@@ -40,10 +46,10 @@ var LocalStorageService = (function () {
         if (storageType != null) {
             this.setStorageType(storageType);
         }
-        this.errors$ = new Rx_1.Observable(function (observer) { return _this.errors = observer; }).share();
-        this.removeItems$ = new Rx_1.Observable(function (observer) { return _this.removeItems = observer; }).share();
-        this.setItems$ = new Rx_1.Observable(function (observer) { return _this.setItems = observer; }).share();
-        this.warnings$ = new Rx_1.Observable(function (observer) { return _this.warnings = observer; }).share();
+        this.errors$ = new Observable_1.Observable(function (observer) { return _this.errors = observer; }).share();
+        this.removeItems$ = new Observable_1.Observable(function (observer) { return _this.removeItems = observer; }).share();
+        this.setItems$ = new Observable_1.Observable(function (observer) { return _this.setItems = observer; }).share();
+        this.warnings$ = new Observable_1.Observable(function (observer) { return _this.warnings = observer; }).share();
         this.isSupported = this.checkSupport();
     }
     LocalStorageService.prototype.add = function (key, value) {
