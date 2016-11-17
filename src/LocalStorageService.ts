@@ -2,8 +2,10 @@
 
 // Interfaces:
 import ILocalStorageEvent from './ILocalStorageEvent';
-import ILocalStorageServiceConfig from './ILocalStorageServiceConfig';
 import INotifyOptions from './INotifyOptions';
+
+// Classes:
+import LocalStorageServiceConfig from './LocalStorageServiceConfig';
 
 // Angular:
 import { Inject } from '@angular/core';
@@ -40,7 +42,7 @@ export class LocalStorageService {
     private warnings: Subscriber<string> = new Subscriber<string>();
 
     constructor (
-        @Inject(LOCAL_STORAGE_SERVICE_CONFIG) config: ILocalStorageServiceConfig
+        @Inject(LOCAL_STORAGE_SERVICE_CONFIG) config: LocalStorageServiceConfig
     ) {
         let { notifyOptions, prefix, storageType } = config;
 

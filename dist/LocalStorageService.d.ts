@@ -1,5 +1,6 @@
+/// <reference types="core-js" />
 import ILocalStorageEvent from './ILocalStorageEvent';
-import ILocalStorageServiceConfig from './ILocalStorageServiceConfig';
+import LocalStorageServiceConfig from './LocalStorageServiceConfig';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/share';
 export declare class LocalStorageService {
@@ -16,7 +17,7 @@ export declare class LocalStorageService {
     private removeItems;
     private setItems;
     private warnings;
-    constructor(config: ILocalStorageServiceConfig);
+    constructor(config: LocalStorageServiceConfig);
     add(key: string, value: any): boolean;
     clearAll(regularExpression: string): boolean;
     deriveKey(key: string): string;

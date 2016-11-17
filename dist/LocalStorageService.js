@@ -11,13 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+// Classes:
+var LocalStorageServiceConfig_1 = require('./LocalStorageServiceConfig');
 // Angular:
 var core_1 = require('@angular/core');
 var Observable_1 = require('rxjs/Observable');
 var Subscriber_1 = require('rxjs/Subscriber');
 require('rxjs/add/operator/share');
 // Dependencies:
-var LocalStorageServiceConfig_1 = require('./LocalStorageServiceConfig');
+var LocalStorageServiceConfig_2 = require('./LocalStorageServiceConfig');
 // Constants:
 var DEPRECATED = 'This function is deprecated.';
 var LOCAL_STORAGE_NOT_SUPPORTED = 'LOCAL_STORAGE_NOT_SUPPORTED';
@@ -239,10 +241,10 @@ var LocalStorageService = (function () {
         }
     };
     LocalStorageService = __decorate([
-        __param(0, core_1.Inject(LocalStorageServiceConfig_1.LOCAL_STORAGE_SERVICE_CONFIG)), 
-        __metadata('design:paramtypes', [Object])
+        __param(0, core_1.Inject(LocalStorageServiceConfig_2.LOCAL_STORAGE_SERVICE_CONFIG)), 
+        __metadata('design:paramtypes', [LocalStorageServiceConfig_1.default])
     ], LocalStorageService);
     return LocalStorageService;
 }());
 exports.LocalStorageService = LocalStorageService;
-//# sourceMappingURL=../src/LocalStorageService.js.map
+//# sourceMappingURL=LocalStorageService.js.map

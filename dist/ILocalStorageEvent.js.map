@@ -1,1 +1,1 @@
-{"version":3,"file":"ILocalStorageEvent.js","sourceRoot":"","sources":["ILocalStorageEvent.ts"],"names":[],"mappings":"AAAA,YAAY,CAAC"}
+{"version":3,"file":"ILocalStorageEvent.js","sourceRoot":"","sources":["../src/ILocalStorageEvent.ts"],"names":[],"mappings":"AAAA,YAAY,CAAC"}

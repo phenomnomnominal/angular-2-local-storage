@@ -1,2 +1,2 @@
 'use strict';
-//# sourceMappingURL=../src/ILocalStorageEvent.js.map
+//# sourceMappingURL=ILocalStorageEvent.js.map

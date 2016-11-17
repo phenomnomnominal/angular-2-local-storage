@@ -4,7 +4,6 @@
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "mapRoot": ".",
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,
@@ -17,7 +16,6 @@
   },
 
   "files": [
-    "./src/angular-2-local-storage.ts",
-    "./typings.d.ts"
+    "./src/angular-2-local-storage.ts"
   ]
 }
