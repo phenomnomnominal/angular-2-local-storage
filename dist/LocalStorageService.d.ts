@@ -18,7 +18,7 @@ export declare class LocalStorageService {
     private warnings;
     constructor(config: ILocalStorageServiceConfig);
     add(key: string, value: any): boolean;
-    clearAll(regularExpression: string): boolean;
+    clearAll(regularExpression?: string): boolean;
     deriveKey(key: string): string;
     get<T>(key: string): T;
     getStorageType(): string;

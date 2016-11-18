@@ -13,7 +13,7 @@ interface ILocalStorageService {
     warnings$: Observable<string>;
 
     // Functions:
-    clearAll (regularExpression: string): boolean;
+    clearAll (regularExpression?: string): boolean;
     deriveKey (key: string): string;
     get <T> (key: string): T;
     getStorageType (): string;

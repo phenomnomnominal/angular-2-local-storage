@@ -72,7 +72,7 @@ export class LocalStorageService {
         return this.set(key, value);
     }
 
-    public clearAll (regularExpression: string): boolean {
+    public clearAll (regularExpression?: string): boolean {
         // Setting both regular expressions independently
         // Empty strings result in catchall RegExp
         let prefixRegex = !!this.prefix ? new RegExp('^' + this.prefix) : new RegExp('');
