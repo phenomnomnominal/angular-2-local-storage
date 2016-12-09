@@ -1,1 +1,1 @@
-{"version":3,"file":"angular-2-local-storage.js","sourceRoot":"","sources":["angular-2-local-storage.ts"],"names":[],"mappings":"AAAA,YAAY,CAAC;AAEb,oCAAoC,uBAAuB,CAAC;AAAnD,wEAAmD;AAC5D,0CAA6C,6BAA6B,CAAC;AAAlE,gGAAkE"}
+{"version":3,"file":"angular-2-local-storage.js","sourceRoot":"","sources":["../src/angular-2-local-storage.ts"],"names":[],"mappings":"AAAA,YAAY,CAAC;AAEb,6DAA4D;AAAnD,oDAAA,mBAAmB,CAAA;AAC5B,yEAA2E;AAAlE,mEAAA,4BAA4B,CAAA"}

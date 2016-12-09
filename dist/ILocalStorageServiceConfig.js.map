@@ -1,1 +1,1 @@
-{"version":3,"file":"ILocalStorageServiceConfig.js","sourceRoot":"","sources":["ILocalStorageServiceConfig.ts"],"names":[],"mappings":"AAAA,YAAY,CAAC"}
+{"version":3,"file":"ILocalStorageServiceConfig.js","sourceRoot":"","sources":["../src/ILocalStorageServiceConfig.ts"],"names":[],"mappings":"AAAA,YAAY,CAAC"}

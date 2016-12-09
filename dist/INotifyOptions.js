@@ -1,2 +1,2 @@
 'use strict';
-//# sourceMappingURL=../src/INotifyOptions.js.map
+//# sourceMappingURL=INotifyOptions.js.map
