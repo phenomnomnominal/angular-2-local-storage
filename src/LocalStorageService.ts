@@ -103,7 +103,7 @@ export class LocalStorageService {
         return `${this.prefix}${key}`;
     }
 
-    public get <T> (key: string): T {
+    public get <T> (key: string): T|string {
         if (!this.isSupported) {
             this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
             return null;
@@ -118,7 +118,7 @@ export class LocalStorageService {
         try {
             return JSON.parse(item);
         } catch (e) {
-            return null;
+            return item;
         }
     }
 
