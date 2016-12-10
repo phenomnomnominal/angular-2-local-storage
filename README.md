@@ -1,6 +1,8 @@
 # angular-2-local-storage
 
-LocalStorageService for Angular 2 with mostly the same API (and most of the code) from [angular-local-storage](https://github.com/grevory/angular-local-storage)
+LocalStorageService for Angular 2 with mostly the same API (and most of the code) from [angular-local-storage](https://github.com/grevory/angular-local-storage).
+
+AoT compatible.
 
 ## Differences:
 
@@ -13,7 +15,7 @@ LocalStorageService for Angular 2 with mostly the same API (and most of the code
 
 ## Usage:
 
-### With angular-cli:
+### With angular-cli or vanilla WebPack:
 
 With the latest angular-cli (WebPack), no config is required.
 
@@ -29,30 +31,24 @@ Nothing to configure, the typings are included in the package.
 First you need to configure the service:
 
 ```typescript
-import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
+import { LocalStorageModule } from 'angular-2-local-storage';
 
-// Create config options (see ILocalStorageServiceConfigOptions) for deets:
-let localStorageServiceConfig = {
-    prefix: 'my-app',
-    storageType: 'sessionStorage'
-};
-
-// Use the provider:
 @NgModule({
     imports: [
-        ..
+        LocalStorageModule.withConfig({
+            prefix: 'my-app',
+            storageType: 'localStorage'
+        })
     ],
     declarations: [
         ..
     ],
     providers: [
-        LocalStorageService,
-        {
-            provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: localStorageServiceConfig
-        }
+        ..
     ],
     bootstrap: [AppComponent]
 })
+export class AppModule {}
 ```
 
 Then you can use it in a component:
@@ -72,3 +68,7 @@ export class SomeComponent {
 }
 
 ```
+
+### Configuration options:
+
+`import { ILocalStorageServiceConfig } from 'angular-2-local-storage';` for type information about the configuration object.

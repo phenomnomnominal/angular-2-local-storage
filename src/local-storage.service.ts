@@ -1,20 +1,12 @@
-'use strict';
-
-// Interfaces:
-import ILocalStorageEvent from './ILocalStorageEvent';
-import ILocalStorageServiceConfig from './ILocalStorageServiceConfig';
-import INotifyOptions from './INotifyOptions';
-
-// Angular:
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 import 'rxjs/add/operator/share';
 
-// Dependencies:
-import { LOCAL_STORAGE_SERVICE_CONFIG } from './LocalStorageServiceConfig';
+import { ILocalStorageEvent } from './local-storage-events.interface';
+import { INotifyOptions } from './notify-options.interface';
+import { ILocalStorageServiceConfig } from './local-storage.config.interface';
 
-// Constants:
 const DEPRECATED: string = 'This function is deprecated.';
 const LOCAL_STORAGE_NOT_SUPPORTED: string = 'LOCAL_STORAGE_NOT_SUPPORTED';
 
@@ -41,13 +33,13 @@ export class LocalStorageService {
     private warnings: Subscriber<string> = new Subscriber<string>();
 
     constructor (
-        @Inject(LOCAL_STORAGE_SERVICE_CONFIG) config: ILocalStorageServiceConfig
+        @Inject('LOCAL_STORAGE_SERVICE_CONFIG') config: ILocalStorageServiceConfig
     ) {
         let { notifyOptions, prefix, storageType } = config;
 
         if (notifyOptions != null) {
             let { setItem, removeItem } = notifyOptions;
-            this.setNotify(setItem, removeItem);
+            this.setNotify(!!setItem, !!removeItem);
         }
         if (prefix != null) {
             this.setPrefix(prefix);

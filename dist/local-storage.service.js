@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,14 +11,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-// Angular:
-var core_1 = require("@angular/core");
-var Observable_1 = require("rxjs/Observable");
-var Subscriber_1 = require("rxjs/Subscriber");
-require("rxjs/add/operator/share");
-// Dependencies:
-var LocalStorageServiceConfig_1 = require("./LocalStorageServiceConfig");
-// Constants:
+var core_1 = require('@angular/core');
+var Observable_1 = require('rxjs/Observable');
+var Subscriber_1 = require('rxjs/Subscriber');
+require('rxjs/add/operator/share');
 var DEPRECATED = 'This function is deprecated.';
 var LOCAL_STORAGE_NOT_SUPPORTED = 'LOCAL_STORAGE_NOT_SUPPORTED';
 var LocalStorageService = (function () {
@@ -38,7 +34,7 @@ var LocalStorageService = (function () {
         var notifyOptions = config.notifyOptions, prefix = config.prefix, storageType = config.storageType;
         if (notifyOptions != null) {
             var setItem = notifyOptions.setItem, removeItem = notifyOptions.removeItem;
-            this.setNotify(setItem, removeItem);
+            this.setNotify(!!setItem, !!removeItem);
         }
         if (prefix != null) {
             this.setPrefix(prefix);
@@ -141,7 +137,7 @@ var LocalStorageService = (function () {
         var _this = this;
         var keys = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            keys[_i] = arguments[_i];
+            keys[_i - 0] = arguments[_i];
         }
         var result = true;
         keys.forEach(function (key) {
@@ -238,12 +234,12 @@ var LocalStorageService = (function () {
             this.notifyOptions.removeItem = removeItem;
         }
     };
+    LocalStorageService = __decorate([
+        core_1.Injectable(),
+        __param(0, core_1.Inject('LOCAL_STORAGE_SERVICE_CONFIG')), 
+        __metadata('design:paramtypes', [Object])
+    ], LocalStorageService);
     return LocalStorageService;
 }());
-LocalStorageService = __decorate([
-    core_1.Injectable(),
-    __param(0, core_1.Inject(LocalStorageServiceConfig_1.LOCAL_STORAGE_SERVICE_CONFIG)),
-    __metadata("design:paramtypes", [Object])
-], LocalStorageService);
 exports.LocalStorageService = LocalStorageService;
-//# sourceMappingURL=LocalStorageService.js.map
+//# sourceMappingURL=local-storage.service.js.map

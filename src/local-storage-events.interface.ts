@@ -1,6 +1,4 @@
-'use strict';
-
-interface ILocalStorageEvent {
+export interface ILocalStorageEvent {
     key: string;
     // Probably a typo, but keeping to stay consistent with
     // angular-local-storage:
@@ -8,4 +6,3 @@ interface ILocalStorageEvent {
     storageType: string;
 }
 
-export default ILocalStorageEvent;
