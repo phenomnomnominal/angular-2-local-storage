@@ -9,6 +9,7 @@ import { ILocalStorageServiceConfig } from './local-storage.config.interface';
 
 const DEPRECATED: string = 'This function is deprecated.';
 const LOCAL_STORAGE_NOT_SUPPORTED: string = 'LOCAL_STORAGE_NOT_SUPPORTED';
+const TRANSIENT_ITEMS_KEY: string = 'TRANSIENT_STORAGE_ITEM_KEYS';
 
 @Injectable()
 export class LocalStorageService {
@@ -162,6 +163,7 @@ export class LocalStorageService {
 
             try {
                 this.webStorage.removeItem(this.deriveKey(key));
+                this.unMarkTransientKey(key);
                 if (this.notifyOptions.removeItem) {
                     this.removeItems.next({
                         key: key,
@@ -176,7 +178,13 @@ export class LocalStorageService {
         return result;
     }
 
-    public set (key: string, value: any): boolean {
+    /**
+     * Store an item in the configured storage type
+     * @param key The name of the item to store
+     * @param value The value of the item to store
+     * @param transient Indicates whether the item is transient i.e. can be cleared upon log out
+     */
+    public set (key: string, value: any, transient?: boolean): boolean {
         // Let's convert `undefined` values to `null` to get the value consistent
         if (value === undefined) {
             value = null;
@@ -192,6 +200,10 @@ export class LocalStorageService {
         try {
             if (this.webStorage) {
                 this.webStorage.setItem(this.deriveKey(key), value);
+
+                if (transient) {
+                    this.markAsTransient(key);
+                }
             }
             if (this.notifyOptions.setItem) {
                 this.setItems.next({
@@ -205,6 +217,33 @@ export class LocalStorageService {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Clear all items that were marked as transient
+     */
+    public clearTransientItems() {
+        let keys = this.get<string[]>(TRANSIENT_ITEMS_KEY) || [];
+        this.remove(TRANSIENT_ITEMS_KEY, ...keys)
+    }
+
+    private markAsTransient(key: string) {
+        let keys = this.get<string[]>(TRANSIENT_ITEMS_KEY) || [];
+        
+        if (keys.indexOf(key) < 0) {
+            keys.push(key);
+            this.set(TRANSIENT_ITEMS_KEY, keys, false);
+        }
+    }
+
+    private unMarkTransientKey(key: string) {
+        let keys = this.get<string[]>(TRANSIENT_ITEMS_KEY) || [];
+        let index = keys.indexOf(key);
+
+        if (index >= 0) {
+            keys.splice(index, 1);
+            this.set(TRANSIENT_ITEMS_KEY, keys, false);
+        }
     }
 
     private checkSupport (): boolean {
