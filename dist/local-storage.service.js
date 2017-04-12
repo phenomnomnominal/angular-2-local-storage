@@ -17,6 +17,7 @@ var Subscriber_1 = require('rxjs/Subscriber');
 require('rxjs/add/operator/share');
 var DEPRECATED = 'This function is deprecated.';
 var LOCAL_STORAGE_NOT_SUPPORTED = 'LOCAL_STORAGE_NOT_SUPPORTED';
+var TRANSIENT_ITEMS_KEY = 'TRANSIENT_STORAGE_ITEM_KEYS';
 var LocalStorageService = (function () {
     function LocalStorageService(config) {
         var _this = this;
@@ -147,6 +148,7 @@ var LocalStorageService = (function () {
             }
             try {
                 _this.webStorage.removeItem(_this.deriveKey(key));
+                _this.unMarkTransientKey(key);
                 if (_this.notifyOptions.removeItem) {
                     _this.removeItems.next({
                         key: key,
@@ -190,6 +192,39 @@ var LocalStorageService = (function () {
             return false;
         }
         return true;
+    };
+    /**
+     * Store an transient item in the configured storage type.
+     * Transient items can be cleared separatly to other storage items i.e. upon user log out
+     */
+    LocalStorageService.prototype.setTransient = function (key, value) {
+        if (this.set(key, value)) {
+            this.markAsTransient(key);
+            return true;
+        }
+        return false;
+    };
+    /**
+     * Clear all items that were marked as transient
+     */
+    LocalStorageService.prototype.clearTransientItems = function () {
+        var keys = this.get(TRANSIENT_ITEMS_KEY) || [];
+        this.remove.apply(this, [TRANSIENT_ITEMS_KEY].concat(keys));
+    };
+    LocalStorageService.prototype.markAsTransient = function (key) {
+        var keys = this.get(TRANSIENT_ITEMS_KEY) || [];
+        if (keys.indexOf(key) < 0) {
+            keys.push(key);
+            this.set(TRANSIENT_ITEMS_KEY, keys);
+        }
+    };
+    LocalStorageService.prototype.unMarkTransientKey = function (key) {
+        var keys = this.get(TRANSIENT_ITEMS_KEY) || [];
+        var index = keys.indexOf(key);
+        if (index >= 0) {
+            keys.splice(index, 1);
+            this.set(TRANSIENT_ITEMS_KEY, keys);
+        }
     };
     LocalStorageService.prototype.checkSupport = function () {
         try {

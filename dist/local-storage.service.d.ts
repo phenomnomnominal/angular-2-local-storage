@@ -26,6 +26,17 @@ export declare class LocalStorageService {
     length(): number;
     remove(...keys: Array<string>): boolean;
     set(key: string, value: any): boolean;
+    /**
+     * Store an transient item in the configured storage type.
+     * Transient items can be cleared separatly to other storage items i.e. upon user log out
+     */
+    setTransient(key: string, value: any): boolean;
+    /**
+     * Clear all items that were marked as transient
+     */
+    clearTransientItems(): void;
+    private markAsTransient(key);
+    private unMarkTransientKey(key);
     private checkSupport();
     private setPrefix(prefix);
     private setStorageType(storageType);

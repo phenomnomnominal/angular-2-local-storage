@@ -9,6 +9,7 @@ import { ILocalStorageServiceConfig } from './local-storage.config.interface';
 
 const DEPRECATED: string = 'This function is deprecated.';
 const LOCAL_STORAGE_NOT_SUPPORTED: string = 'LOCAL_STORAGE_NOT_SUPPORTED';
+const TRANSIENT_ITEMS_KEY: string = 'TRANSIENT_STORAGE_ITEM_KEYS';
 
 @Injectable()
 export class LocalStorageService {
@@ -162,6 +163,7 @@ export class LocalStorageService {
 
             try {
                 this.webStorage.removeItem(this.deriveKey(key));
+                this.unMarkTransientKey(key);
                 if (this.notifyOptions.removeItem) {
                     this.removeItems.next({
                         key: key,
@@ -205,6 +207,46 @@ export class LocalStorageService {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Store an transient item in the configured storage type.
+     * Transient items can be cleared separatly to other storage items i.e. upon user log out
+     */
+    public setTransient(key: string, value: any): boolean {
+        if (this.set(key, value)) {
+            this.markAsTransient(key);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Clear all items that were marked as transient
+     */
+    public clearTransientItems() {
+        let keys = this.get<string[]>(TRANSIENT_ITEMS_KEY) || [];
+        this.remove(TRANSIENT_ITEMS_KEY, ...keys)
+    }
+
+    private markAsTransient(key: string) {
+        let keys = this.get<string[]>(TRANSIENT_ITEMS_KEY) || [];
+        
+        if (keys.indexOf(key) < 0) {
+            keys.push(key);
+            this.set(TRANSIENT_ITEMS_KEY, keys);
+        }
+    }
+
+    private unMarkTransientKey(key: string) {
+        let keys = this.get<string[]>(TRANSIENT_ITEMS_KEY) || [];
+        let index = keys.indexOf(key);
+
+        if (index >= 0) {
+            keys.splice(index, 1);
+            this.set(TRANSIENT_ITEMS_KEY, keys);
+        }
     }
 
     private checkSupport (): boolean {
