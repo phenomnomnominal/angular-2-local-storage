@@ -178,13 +178,7 @@ export class LocalStorageService {
         return result;
     }
 
-    /**
-     * Store an item in the configured storage type
-     * @param key The name of the item to store
-     * @param value The value of the item to store
-     * @param transient Indicates whether the item is transient i.e. can be cleared upon log out
-     */
-    public set (key: string, value: any, transient?: boolean): boolean {
+    public set (key: string, value: any): boolean {
         // Let's convert `undefined` values to `null` to get the value consistent
         if (value === undefined) {
             value = null;
@@ -200,10 +194,6 @@ export class LocalStorageService {
         try {
             if (this.webStorage) {
                 this.webStorage.setItem(this.deriveKey(key), value);
-
-                if (transient) {
-                    this.markAsTransient(key);
-                }
             }
             if (this.notifyOptions.setItem) {
                 this.setItems.next({
@@ -220,6 +210,19 @@ export class LocalStorageService {
     }
 
     /**
+     * Store an transient item in the configured storage type.
+     * Transient items can be cleared separatly to other storage items i.e. upon user log out
+     */
+    public setTransient(key: string, value: any): boolean {
+        if (this.set(key, value)) {
+            this.markAsTransient(key);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Clear all items that were marked as transient
      */
     public clearTransientItems() {
@@ -232,7 +235,7 @@ export class LocalStorageService {
         
         if (keys.indexOf(key) < 0) {
             keys.push(key);
-            this.set(TRANSIENT_ITEMS_KEY, keys, false);
+            this.set(TRANSIENT_ITEMS_KEY, keys);
         }
     }
 
@@ -242,7 +245,7 @@ export class LocalStorageService {
 
         if (index >= 0) {
             keys.splice(index, 1);
-            this.set(TRANSIENT_ITEMS_KEY, keys, false);
+            this.set(TRANSIENT_ITEMS_KEY, keys);
         }
     }
 
