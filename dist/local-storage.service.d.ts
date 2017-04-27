@@ -2,7 +2,9 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/share';
 import { ILocalStorageEvent } from './local-storage-events.interface';
 import { ILocalStorageServiceConfig } from './local-storage.config.interface';
+import { CookieService } from 'angular2-cookie/core';
 export declare class LocalStorageService {
+    private _cookieService;
     isSupported: boolean;
     errors$: Observable<string>;
     removeItems$: Observable<ILocalStorageEvent>;
@@ -16,7 +18,7 @@ export declare class LocalStorageService {
     private removeItems;
     private setItems;
     private warnings;
-    constructor(config: ILocalStorageServiceConfig);
+    constructor(config: ILocalStorageServiceConfig, _cookieService: CookieService);
     add(key: string, value: any): boolean;
     clearAll(regularExpression?: string): boolean;
     deriveKey(key: string): string;

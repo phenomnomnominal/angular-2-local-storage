@@ -15,11 +15,13 @@ var core_1 = require('@angular/core');
 var Observable_1 = require('rxjs/Observable');
 var Subscriber_1 = require('rxjs/Subscriber');
 require('rxjs/add/operator/share');
+var core_2 = require('angular2-cookie/core');
 var DEPRECATED = 'This function is deprecated.';
 var LOCAL_STORAGE_NOT_SUPPORTED = 'LOCAL_STORAGE_NOT_SUPPORTED';
 var LocalStorageService = (function () {
-    function LocalStorageService(config) {
+    function LocalStorageService(config, _cookieService) {
         var _this = this;
+        this._cookieService = _cookieService;
         this.isSupported = false;
         this.notifyOptions = {
             setItem: false,
@@ -85,7 +87,13 @@ var LocalStorageService = (function () {
     LocalStorageService.prototype.get = function (key) {
         if (!this.isSupported) {
             this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
-            return null;
+            var item_1 = this._cookieService.get(key);
+            if (!item_1 || item_1 === 'null') {
+                return null;
+            }
+            else {
+                return JSON.parse(item_1);
+            }
         }
         var item = this.webStorage ? this.webStorage.getItem(this.deriveKey(key)) : null;
         // FIXME: not a perfect solution, since a valid 'null' string can't be stored
@@ -170,8 +178,10 @@ var LocalStorageService = (function () {
             value = JSON.stringify(value);
         }
         if (!this.isSupported) {
+            // Store in cookie if not supported
+            this._cookieService.put(key, value);
             this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
-            return false;
+            return true;
         }
         try {
             if (this.webStorage) {
@@ -237,7 +247,7 @@ var LocalStorageService = (function () {
     LocalStorageService = __decorate([
         core_1.Injectable(),
         __param(0, core_1.Inject('LOCAL_STORAGE_SERVICE_CONFIG')), 
-        __metadata('design:paramtypes', [Object])
+        __metadata('design:paramtypes', [Object, core_2.CookieService])
     ], LocalStorageService);
     return LocalStorageService;
 }());

@@ -6,6 +6,7 @@ import 'rxjs/add/operator/share';
 import { ILocalStorageEvent } from './local-storage-events.interface';
 import { INotifyOptions } from './notify-options.interface';
 import { ILocalStorageServiceConfig } from './local-storage.config.interface';
+import { CookieService } from 'angular2-cookie/core';
 
 const DEPRECATED: string = 'This function is deprecated.';
 const LOCAL_STORAGE_NOT_SUPPORTED: string = 'LOCAL_STORAGE_NOT_SUPPORTED';
@@ -28,12 +29,13 @@ export class LocalStorageService {
     private webStorage: Storage;
 
     private errors: Subscriber<string> = new Subscriber<string>();
-    private removeItems: Subscriber<ILocalStorageEvent> = new Subscriber<ILocalStorageEvent>() ;
+    private removeItems: Subscriber<ILocalStorageEvent> = new Subscriber<ILocalStorageEvent>();
     private setItems: Subscriber<ILocalStorageEvent> = new Subscriber<ILocalStorageEvent>();
     private warnings: Subscriber<string> = new Subscriber<string>();
 
-    constructor (
-        @Inject('LOCAL_STORAGE_SERVICE_CONFIG') config: ILocalStorageServiceConfig
+    constructor(
+        @Inject('LOCAL_STORAGE_SERVICE_CONFIG') config: ILocalStorageServiceConfig,
+        private _cookieService: CookieService
     ) {
         let { notifyOptions, prefix, storageType } = config;
 
@@ -56,7 +58,7 @@ export class LocalStorageService {
         this.isSupported = this.checkSupport();
     }
 
-    public add (key: string, value: any): boolean {
+    public add(key: string, value: any): boolean {
         if (console && console.warn) {
             console.warn(DEPRECATED);
             console.warn('Use `LocalStorageService.set` instead.');
@@ -65,7 +67,7 @@ export class LocalStorageService {
         return this.set(key, value);
     }
 
-    public clearAll (regularExpression?: string): boolean {
+    public clearAll(regularExpression?: string): boolean {
         // Setting both regular expressions independently
         // Empty strings result in catchall RegExp
         let prefixRegex = !!this.prefix ? new RegExp('^' + this.prefix) : new RegExp('');
@@ -92,14 +94,19 @@ export class LocalStorageService {
         return true;
     }
 
-    public deriveKey (key: string): string {
+    public deriveKey(key: string): string {
         return `${this.prefix}${key}`;
     }
 
-    public get <T> (key: string): T {
+    public get<T>(key: string): T {
         if (!this.isSupported) {
             this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
-            return null;
+            let item = this._cookieService.get(key);
+            if (!item || item === 'null') {
+                return null;
+            } else {
+                return JSON.parse(item);
+            }
         }
 
         let item = this.webStorage ? this.webStorage.getItem(this.deriveKey(key)) : null;
@@ -115,11 +122,11 @@ export class LocalStorageService {
         }
     }
 
-    public getStorageType (): string {
+    public getStorageType(): string {
         return this.storageType;
     }
 
-    public keys (): Array<string> {
+    public keys(): Array<string> {
         if (!this.isSupported) {
             this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
             return [];
@@ -141,10 +148,10 @@ export class LocalStorageService {
         return keys;
     }
 
-    public length (): number {
+    public length(): number {
         let count = 0;
         let storage = this.webStorage;
-        for(let i = 0; i < storage.length; i++) {
+        for (let i = 0; i < storage.length; i++) {
             if (storage.key(i).indexOf(this.prefix) === 0) {
                 count += 1;
             }
@@ -152,7 +159,7 @@ export class LocalStorageService {
         return count;
     }
 
-    public remove (...keys: Array<string>): boolean {
+    public remove(...keys: Array<string>): boolean {
         let result = true;
         keys.forEach((key: string) => {
             if (!this.isSupported) {
@@ -176,7 +183,7 @@ export class LocalStorageService {
         return result;
     }
 
-    public set (key: string, value: any): boolean {
+    public set(key: string, value: any): boolean {
         // Let's convert `undefined` values to `null` to get the value consistent
         if (value === undefined) {
             value = null;
@@ -185,8 +192,10 @@ export class LocalStorageService {
         }
 
         if (!this.isSupported) {
+            // Store in cookie if not supported
+            this._cookieService.put(key, value);
             this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
-            return false;
+            return true;
         }
 
         try {
@@ -207,10 +216,10 @@ export class LocalStorageService {
         return true;
     }
 
-    private checkSupport (): boolean {
+    private checkSupport(): boolean {
         try {
             let supported = this.storageType in window
-                          && window[this.storageType] !== null;
+                && window[this.storageType] !== null;
 
             if (supported) {
                 this.webStorage = window[this.storageType];
@@ -233,7 +242,7 @@ export class LocalStorageService {
         }
     }
 
-    private setPrefix (prefix: string): void {
+    private setPrefix(prefix: string): void {
         this.prefix = prefix;
 
         // If there is a prefix set in the config let's use that with an appended
@@ -244,11 +253,11 @@ export class LocalStorageService {
         }
     }
 
-    private setStorageType (storageType: 'sessionStorage' | 'localStorage'): void {
+    private setStorageType(storageType: 'sessionStorage' | 'localStorage'): void {
         this.storageType = storageType;
     }
 
-    private setNotify (setItem: boolean, removeItem: boolean): void {
+    private setNotify(setItem: boolean, removeItem: boolean): void {
         if (setItem != null) {
             this.notifyOptions.setItem = setItem;
         }
