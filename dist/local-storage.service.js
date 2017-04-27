@@ -64,6 +64,7 @@ var LocalStorageService = (function () {
         var testRegex = !!regularExpression ? new RegExp(regularExpression) : new RegExp('');
         if (!this.isSupported) {
             this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
+            this._cookieService.removeAll();
             return false;
         }
         var prefixLength = this.prefix.length;

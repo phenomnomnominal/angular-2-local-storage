@@ -75,6 +75,7 @@ export class LocalStorageService {
 
         if (!this.isSupported) {
             this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
+            this._cookieService.removeAll();
             return false;
         }
 
