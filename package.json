@@ -35,5 +35,8 @@
     "rxjs": "^5.0.3",
     "typescript": "2.0.10",
     "zone.js": "0.7.6"
+  },
+  "dependencies": {
+    "angular2-cookie": "^1.2.6"
   }
 }
