@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/share';
+import { share } from 'rxjs/operators';
 import { ILocalStorageEvent } from './local-storage-events.interface';
 import { ILocalStorageServiceConfig } from './local-storage.config.interface';
 export declare class LocalStorageService {
