@@ -11,13 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var core_1 = require('@angular/core');
-var Observable_1 = require('rxjs/Observable');
-var Subscriber_1 = require('rxjs/Subscriber');
-require('rxjs/add/operator/share');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var rxjs_1 = require("rxjs");
+var operators_1 = require("rxjs/operators");
 var DEPRECATED = 'This function is deprecated.';
 var LOCAL_STORAGE_NOT_SUPPORTED = 'LOCAL_STORAGE_NOT_SUPPORTED';
-var LocalStorageService = (function () {
+var LocalStorageService = /** @class */ (function () {
     function LocalStorageService(config) {
         var _this = this;
         this.isSupported = false;
@@ -27,10 +27,10 @@ var LocalStorageService = (function () {
         };
         this.prefix = 'ls';
         this.storageType = 'localStorage';
-        this.errors = new Subscriber_1.Subscriber();
-        this.removeItems = new Subscriber_1.Subscriber();
-        this.setItems = new Subscriber_1.Subscriber();
-        this.warnings = new Subscriber_1.Subscriber();
+        this.errors = new rxjs_1.Subscriber();
+        this.removeItems = new rxjs_1.Subscriber();
+        this.setItems = new rxjs_1.Subscriber();
+        this.warnings = new rxjs_1.Subscriber();
         var notifyOptions = config.notifyOptions, prefix = config.prefix, storageType = config.storageType;
         if (notifyOptions != null) {
             var setItem = notifyOptions.setItem, removeItem = notifyOptions.removeItem;
@@ -42,10 +42,10 @@ var LocalStorageService = (function () {
         if (storageType != null) {
             this.setStorageType(storageType);
         }
-        this.errors$ = new Observable_1.Observable(function (observer) { return _this.errors = observer; }).share();
-        this.removeItems$ = new Observable_1.Observable(function (observer) { return _this.removeItems = observer; }).share();
-        this.setItems$ = new Observable_1.Observable(function (observer) { return _this.setItems = observer; }).share();
-        this.warnings$ = new Observable_1.Observable(function (observer) { return _this.warnings = observer; }).share();
+        this.errors$ = new rxjs_1.Observable(function (observer) { return _this.errors = observer; }).pipe(operators_1.share());
+        this.removeItems$ = new rxjs_1.Observable(function (observer) { return _this.removeItems = observer; }).pipe(operators_1.share());
+        this.setItems$ = new rxjs_1.Observable(function (observer) { return _this.setItems = observer; }).pipe(operators_1.share());
+        this.warnings$ = new rxjs_1.Observable(function (observer) { return _this.warnings = observer; }).pipe(operators_1.share());
         this.isSupported = this.checkSupport();
     }
     LocalStorageService.prototype.add = function (key, value) {
@@ -137,7 +137,7 @@ var LocalStorageService = (function () {
         var _this = this;
         var keys = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            keys[_i - 0] = arguments[_i];
+            keys[_i] = arguments[_i];
         }
         var result = true;
         keys.forEach(function (key) {
@@ -236,8 +236,8 @@ var LocalStorageService = (function () {
     };
     LocalStorageService = __decorate([
         core_1.Injectable(),
-        __param(0, core_1.Inject('LOCAL_STORAGE_SERVICE_CONFIG')), 
-        __metadata('design:paramtypes', [Object])
+        __param(0, core_1.Inject('LOCAL_STORAGE_SERVICE_CONFIG')),
+        __metadata("design:paramtypes", [Object])
     ], LocalStorageService);
     return LocalStorageService;
 }());

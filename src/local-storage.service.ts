@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subscriber } from 'rxjs/Subscriber';
-import 'rxjs/add/operator/share';
+import { Observable, Subscriber } from 'rxjs';
+import { share } from 'rxjs/operators';
 
 import { ILocalStorageEvent } from './local-storage-events.interface';
 import { INotifyOptions } from './notify-options.interface';
@@ -48,10 +47,10 @@ export class LocalStorageService {
             this.setStorageType(storageType);
         }
 
-        this.errors$ = new Observable<string>((observer: Subscriber<string>) => this.errors = observer).share();
-        this.removeItems$ = new Observable<ILocalStorageEvent>((observer: Subscriber<ILocalStorageEvent>) => this.removeItems = observer).share();
-        this.setItems$ = new Observable<ILocalStorageEvent>((observer: Subscriber<ILocalStorageEvent>) => this.setItems = observer).share();
-        this.warnings$ = new Observable<string>((observer: Subscriber<string>) => this.warnings = observer).share();
+        this.errors$ = new Observable<string>((observer: Subscriber<string>) => this.errors = observer).pipe(share());
+        this.removeItems$ = new Observable<ILocalStorageEvent>((observer: Subscriber<ILocalStorageEvent>) => this.removeItems = observer).pipe(share());
+        this.setItems$ = new Observable<ILocalStorageEvent>((observer: Subscriber<ILocalStorageEvent>) => this.setItems = observer).pipe(share());
+        this.warnings$ = new Observable<string>((observer: Subscriber<string>) => this.warnings = observer).pipe(share());
 
         this.isSupported = this.checkSupport();
     }
