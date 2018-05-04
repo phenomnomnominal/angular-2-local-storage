@@ -1,6 +1,7 @@
 .idea/
 node_modules/
 npm-debug.log
+yarn-error.log
 src/*.js
 src/*.js.map
 src/*.d.ts
