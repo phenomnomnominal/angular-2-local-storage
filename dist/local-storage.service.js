@@ -235,8 +235,10 @@ var LocalStorageService = /** @class */ (function () {
         }
     };
     LocalStorageService = __decorate([
-        core_1.Injectable(),
-        __param(0, core_1.Inject('LOCAL_STORAGE_SERVICE_CONFIG')),
+        core_1.Injectable({
+            providedIn: 'root'
+        }),
+        __param(0, core_1.Optional()), __param(0, core_1.Inject('LOCAL_STORAGE_SERVICE_CONFIG')),
         __metadata("design:paramtypes", [Object])
     ], LocalStorageService);
     return LocalStorageService;

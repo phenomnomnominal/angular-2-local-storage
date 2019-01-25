@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import { share } from 'rxjs/operators';
 
@@ -9,7 +9,9 @@ import { ILocalStorageServiceConfig } from './local-storage.config.interface';
 const DEPRECATED: string = 'This function is deprecated.';
 const LOCAL_STORAGE_NOT_SUPPORTED: string = 'LOCAL_STORAGE_NOT_SUPPORTED';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class LocalStorageService {
     public isSupported: boolean = false;
 
@@ -32,7 +34,7 @@ export class LocalStorageService {
     private warnings: Subscriber<string> = new Subscriber<string>();
 
     constructor (
-        @Inject('LOCAL_STORAGE_SERVICE_CONFIG') config: ILocalStorageServiceConfig
+        @Optional() @Inject('LOCAL_STORAGE_SERVICE_CONFIG') config: ILocalStorageServiceConfig
     ) {
         let { notifyOptions, prefix, storageType } = config;
 
