@@ -25,8 +25,8 @@ export declare class LocalStorageService {
     length(): number;
     remove(...keys: Array<string>): boolean;
     set(key: string, value: any): boolean;
-    private checkSupport();
-    private setPrefix(prefix);
-    private setStorageType(storageType);
-    private setNotify(setItem, removeItem);
+    private checkSupport;
+    private setPrefix;
+    private setStorageType;
+    private setNotify;
 }

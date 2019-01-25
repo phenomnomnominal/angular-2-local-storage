@@ -7,12 +7,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var local_storage_service_1 = require("./local-storage.service");
 var LocalStorageModule = /** @class */ (function () {
     function LocalStorageModule() {
     }
     LocalStorageModule_1 = LocalStorageModule;
-    LocalStorageModule.withConfig = function (userConfig) {
+    LocalStorageModule.forRoot = function (userConfig) {
         if (userConfig === void 0) { userConfig = {}; }
         return {
             ngModule: LocalStorageModule_1,
@@ -21,15 +20,11 @@ var LocalStorageModule = /** @class */ (function () {
             ]
         };
     };
+    var LocalStorageModule_1;
     LocalStorageModule = LocalStorageModule_1 = __decorate([
-        core_1.NgModule({
-            providers: [
-                local_storage_service_1.LocalStorageService
-            ]
-        })
+        core_1.NgModule()
     ], LocalStorageModule);
     return LocalStorageModule;
-    var LocalStorageModule_1;
 }());
 exports.LocalStorageModule = LocalStorageModule;
 //# sourceMappingURL=local-storage.module.js.map

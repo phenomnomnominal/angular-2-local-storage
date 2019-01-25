@@ -1,6 +1,6 @@
 {
   "name": "angular-2-local-storage",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "LocalStorageService for Angular 2 with mostly the same API (and most of the code) from angular-local-storage",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -25,21 +25,21 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": ">=6.0.0 <8.0.0",
-    "@angular/core": ">=6.0.0 <8.0.0",
-    "@angular/platform-browser": ">=6.0.0 <8.0.0",
-    "rxjs": "^6.0.0"
+    "@angular/common": ">6.0.0",
+    "@angular/core": ">6.0.0",
+    "@angular/platform-browser": ">6.0.0",
+    "rxjs": ">6.0.0"
   },
   "devDependencies": {
-    "@angular/common": "^6.0.0",
-    "@angular/compiler": "^6.0.0",
-    "@angular/compiler-cli": "^6.0.0",
-    "@angular/core": "^6.0.0",
-    "@angular/platform-browser": "^6.0.0",
-    "@angular/platform-server": "^6.0.0",
+    "@angular/common": "latest",
+    "@angular/compiler": "latest",
+    "@angular/compiler-cli": "latest",
+    "@angular/core": "latest",
+    "@angular/platform-browser": "latest",
+    "@angular/platform-server": "latest",
     "rimraf": "2.6.2",
-    "rxjs": "^6.0.0",
-    "zone.js": "0.8.26",
-    "typescript": "~2.7.2"
+    "rxjs": "latest",
+    "zone.js": "latest",
+    "typescript": "latest"
   }
 }

@@ -1,41 +1,28 @@
 # angular-2-local-storage
 
-LocalStorageService for Angular 2 with mostly the same API (and most of the code) from [angular-local-storage](https://github.com/grevory/angular-local-storage).
+LocalStorageService for Angular with mostly the same API (and most of the code) from [angular-local-storage](https://github.com/grevory/angular-local-storage).
 
 AoT compatible.
 
-## Differences:
+## Differences
 
 * No events broadcast on $rootScope - LocalStorageService exposes observables for `errors$`, `removeItems$`, `setItems$` and `warning$` if you really need something to happen when something happens.
 * The `bind` function doesn't work anymore (there is a stub so this can still be a drop-in, but it'll do nothing).
 
-## Install:
+## Install
 
 `npm install angular-2-local-storage`
 
-## Usage:
+## Usage
 
-### With angular-cli or vanilla WebPack:
-
-With the latest angular-cli (WebPack), no config is required.
-
-For older versions (SystemJS based) see the comments here for configuration:
-[Issue #20](https://github.com/phenomnomnominal/angular-2-local-storage/issues/20)
-
-### With TypeScript
-
-Nothing to configure, the typings are included in the package.
-
-### In your app:
-
-First you need to configure the service:
+You can optionally configure the module:
 
 ```typescript
 import { LocalStorageModule } from 'angular-2-local-storage';
 
 @NgModule({
     imports: [
-        LocalStorageModule.withConfig({
+        LocalStorageModule.forRoot({
             prefix: 'my-app',
             storageType: 'localStorage'
         })
@@ -48,7 +35,7 @@ import { LocalStorageModule } from 'angular-2-local-storage';
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
 ```
 
 Then you can use it in a component:
@@ -61,7 +48,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 })
 export class SomeComponent {
     constructor (
-        private localStorageService: LocalStorageService
+        private _localStorageService: LocalStorageService
     ) {
         // YAY!
     }
@@ -69,6 +56,6 @@ export class SomeComponent {
 
 ```
 
-### Configuration options:
+### Configuration options
 
 `import { ILocalStorageServiceConfig } from 'angular-2-local-storage';` for type information about the configuration object.
