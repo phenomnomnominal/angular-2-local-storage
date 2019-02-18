@@ -15,7 +15,7 @@ export declare class LocalStorageService {
     private removeItems;
     private setItems;
     private warnings;
-    constructor(config: ILocalStorageServiceConfig);
+    constructor(config?: ILocalStorageServiceConfig);
     add(key: string, value: any): boolean;
     clearAll(regularExpression?: string): boolean;
     deriveKey(key: string): string;

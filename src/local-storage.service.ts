@@ -34,7 +34,7 @@ export class LocalStorageService {
     private warnings: Subscriber<string> = new Subscriber<string>();
 
     constructor (
-        @Optional() @Inject('LOCAL_STORAGE_SERVICE_CONFIG') config: ILocalStorageServiceConfig
+        @Optional() @Inject('LOCAL_STORAGE_SERVICE_CONFIG') config: ILocalStorageServiceConfig = {}
     ) {
         let { notifyOptions, prefix, storageType } = config;
 

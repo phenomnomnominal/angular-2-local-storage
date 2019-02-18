@@ -19,6 +19,7 @@ var DEPRECATED = 'This function is deprecated.';
 var LOCAL_STORAGE_NOT_SUPPORTED = 'LOCAL_STORAGE_NOT_SUPPORTED';
 var LocalStorageService = /** @class */ (function () {
     function LocalStorageService(config) {
+        if (config === void 0) { config = {}; }
         var _this = this;
         this.isSupported = false;
         this.notifyOptions = {
