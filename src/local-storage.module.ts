@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { ILocalStorageServiceConfig } from './local-storage.config.interface';
+import { ILocalStorageServiceConfig, LOCAL_STORAGE_SERVICE_CONFIG } from './local-storage.config.interface';
 
 @NgModule()
 export class LocalStorageModule {
@@ -8,7 +8,7 @@ export class LocalStorageModule {
         return {
             ngModule: LocalStorageModule,
             providers: [
-                { provide: 'LOCAL_STORAGE_SERVICE_CONFIG', useValue: userConfig }
+                { provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: userConfig }
             ]
         }
     }

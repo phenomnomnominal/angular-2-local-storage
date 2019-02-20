@@ -4,7 +4,7 @@ import { share } from 'rxjs/operators';
 
 import { ILocalStorageEvent } from './local-storage-events.interface';
 import { INotifyOptions } from './notify-options.interface';
-import { ILocalStorageServiceConfig } from './local-storage.config.interface';
+import { ILocalStorageServiceConfig, LOCAL_STORAGE_SERVICE_CONFIG } from './local-storage.config.interface';
 
 const DEPRECATED: string = 'This function is deprecated.';
 const LOCAL_STORAGE_NOT_SUPPORTED: string = 'LOCAL_STORAGE_NOT_SUPPORTED';
@@ -34,7 +34,7 @@ export class LocalStorageService {
     private warnings: Subscriber<string> = new Subscriber<string>();
 
     constructor (
-        @Optional() @Inject('LOCAL_STORAGE_SERVICE_CONFIG') config: ILocalStorageServiceConfig = {}
+        @Optional() @Inject(LOCAL_STORAGE_SERVICE_CONFIG) config: ILocalStorageServiceConfig = {}
     ) {
         let { notifyOptions, prefix, storageType } = config;
 
