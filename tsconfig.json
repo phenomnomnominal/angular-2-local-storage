@@ -13,7 +13,9 @@
     "rootDir": "./src",
     "sourceMap": true,
     "target": "es5",
-    "inlineSources": false
+    "inlineSources": false,
+    "importHelpers": true,
+    "types": [],
   },
 
   "files": [
@@ -24,6 +26,11 @@
     "genDir": "compiled",
     "debug": true,
     "skipMetadataEmit" : false,
-    "strictMetadataEmit": true
+    "strictMetadataEmit": true,
+    "annotateForClosureCompiler": true,
+    "skipTemplateCodegen": true,
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+    "enableResourceInlining": true,
   }
 }

@@ -6,8 +6,7 @@
   "typings": "dist/index.d.ts",
   "author": "Craig Spence <craigspence0@gmail.com>",
   "scripts": {
-    "prebuild": "rimraf ./dist ./compiled && mkdir dist",
-    "build": "ngc -p ./tsconfig.json && tsc -p ./tsconfig.json"
+    "build": "ng-packagr"
   },
   "contributors": [
     {
@@ -37,9 +36,10 @@
     "@angular/core": "latest",
     "@angular/platform-browser": "latest",
     "@angular/platform-server": "latest",
-    "rimraf": "2.6.2",
+    "ng-packagr": "^4.7.1",
     "rxjs": "latest",
-    "zone.js": "latest",
-    "typescript": "latest"
+    "tsickle": "^0.34.3",
+    "typescript": "latest",
+    "zone.js": "latest"
   }
 }
