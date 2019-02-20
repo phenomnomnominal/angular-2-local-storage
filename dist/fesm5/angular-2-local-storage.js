@@ -1,21 +1,51 @@
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var rxjs_1 = require("rxjs");
-var operators_1 = require("rxjs/operators");
+import { InjectionToken, NgModule, Inject, Injectable, Optional, defineInjectable, inject } from '@angular/core';
+import { Observable, Subscriber } from 'rxjs';
+import { share } from 'rxjs/operators';
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+var LOCAL_STORAGE_SERVICE_CONFIG = new InjectionToken('LOCAL_STORAGE_SERVICE_CONFIG');
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var LocalStorageModule = /** @class */ (function () {
+    function LocalStorageModule() {
+    }
+    /**
+     * @param {?=} userConfig
+     * @return {?}
+     */
+    LocalStorageModule.forRoot = /**
+     * @param {?=} userConfig
+     * @return {?}
+     */
+    function (userConfig) {
+        if (userConfig === void 0) { userConfig = {}; }
+        return {
+            ngModule: LocalStorageModule,
+            providers: [
+                { provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: userConfig }
+            ]
+        };
+    };
+    LocalStorageModule.decorators = [
+        { type: NgModule }
+    ];
+    return LocalStorageModule;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
 var DEPRECATED = 'This function is deprecated.';
+/** @type {?} */
 var LOCAL_STORAGE_NOT_SUPPORTED = 'LOCAL_STORAGE_NOT_SUPPORTED';
 var LocalStorageService = /** @class */ (function () {
     function LocalStorageService(config) {
@@ -28,10 +58,10 @@ var LocalStorageService = /** @class */ (function () {
         };
         this.prefix = 'ls';
         this.storageType = 'localStorage';
-        this.errors = new rxjs_1.Subscriber();
-        this.removeItems = new rxjs_1.Subscriber();
-        this.setItems = new rxjs_1.Subscriber();
-        this.warnings = new rxjs_1.Subscriber();
+        this.errors = new Subscriber();
+        this.removeItems = new Subscriber();
+        this.setItems = new Subscriber();
+        this.warnings = new Subscriber();
         var notifyOptions = config.notifyOptions, prefix = config.prefix, storageType = config.storageType;
         if (notifyOptions != null) {
             var setItem = notifyOptions.setItem, removeItem = notifyOptions.removeItem;
@@ -43,28 +73,65 @@ var LocalStorageService = /** @class */ (function () {
         if (storageType != null) {
             this.setStorageType(storageType);
         }
-        this.errors$ = new rxjs_1.Observable(function (observer) { return _this.errors = observer; }).pipe(operators_1.share());
-        this.removeItems$ = new rxjs_1.Observable(function (observer) { return _this.removeItems = observer; }).pipe(operators_1.share());
-        this.setItems$ = new rxjs_1.Observable(function (observer) { return _this.setItems = observer; }).pipe(operators_1.share());
-        this.warnings$ = new rxjs_1.Observable(function (observer) { return _this.warnings = observer; }).pipe(operators_1.share());
+        this.errors$ = new Observable((/**
+         * @param {?} observer
+         * @return {?}
+         */
+        function (observer) { return _this.errors = observer; })).pipe(share());
+        this.removeItems$ = new Observable((/**
+         * @param {?} observer
+         * @return {?}
+         */
+        function (observer) { return _this.removeItems = observer; })).pipe(share());
+        this.setItems$ = new Observable((/**
+         * @param {?} observer
+         * @return {?}
+         */
+        function (observer) { return _this.setItems = observer; })).pipe(share());
+        this.warnings$ = new Observable((/**
+         * @param {?} observer
+         * @return {?}
+         */
+        function (observer) { return _this.warnings = observer; })).pipe(share());
         this.isSupported = this.checkSupport();
     }
-    LocalStorageService.prototype.add = function (key, value) {
+    /**
+     * @param {?} key
+     * @param {?} value
+     * @return {?}
+     */
+    LocalStorageService.prototype.add = /**
+     * @param {?} key
+     * @param {?} value
+     * @return {?}
+     */
+    function (key, value) {
         if (console && console.warn) {
             console.warn(DEPRECATED);
             console.warn('Use `LocalStorageService.set` instead.');
         }
         return this.set(key, value);
     };
-    LocalStorageService.prototype.clearAll = function (regularExpression) {
+    /**
+     * @param {?=} regularExpression
+     * @return {?}
+     */
+    LocalStorageService.prototype.clearAll = /**
+     * @param {?=} regularExpression
+     * @return {?}
+     */
+    function (regularExpression) {
         // Setting both regular expressions independently
         // Empty strings result in catchall RegExp
+        /** @type {?} */
         var prefixRegex = !!this.prefix ? new RegExp('^' + this.prefix) : new RegExp('');
+        /** @type {?} */
         var testRegex = !!regularExpression ? new RegExp(regularExpression) : new RegExp('');
         if (!this.isSupported) {
             this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
             return false;
         }
+        /** @type {?} */
         var prefixLength = this.prefix.length;
         for (var key in this.webStorage) {
             // Only remove items that are for this app and match the regular expression
@@ -80,14 +147,33 @@ var LocalStorageService = /** @class */ (function () {
         }
         return true;
     };
-    LocalStorageService.prototype.deriveKey = function (key) {
+    /**
+     * @param {?} key
+     * @return {?}
+     */
+    LocalStorageService.prototype.deriveKey = /**
+     * @param {?} key
+     * @return {?}
+     */
+    function (key) {
         return "" + this.prefix + key;
     };
-    LocalStorageService.prototype.get = function (key) {
+    /**
+     * @template T
+     * @param {?} key
+     * @return {?}
+     */
+    LocalStorageService.prototype.get = /**
+     * @template T
+     * @param {?} key
+     * @return {?}
+     */
+    function (key) {
         if (!this.isSupported) {
             this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
             return null;
         }
+        /** @type {?} */
         var item = this.webStorage ? this.webStorage.getItem(this.deriveKey(key)) : null;
         // FIXME: not a perfect solution, since a valid 'null' string can't be stored
         if (!item || item === 'null') {
@@ -100,15 +186,29 @@ var LocalStorageService = /** @class */ (function () {
             return null;
         }
     };
-    LocalStorageService.prototype.getStorageType = function () {
+    /**
+     * @return {?}
+     */
+    LocalStorageService.prototype.getStorageType = /**
+     * @return {?}
+     */
+    function () {
         return this.storageType;
     };
-    LocalStorageService.prototype.keys = function () {
+    /**
+     * @return {?}
+     */
+    LocalStorageService.prototype.keys = /**
+     * @return {?}
+     */
+    function () {
         if (!this.isSupported) {
             this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
             return [];
         }
+        /** @type {?} */
         var prefixLength = this.prefix.length;
+        /** @type {?} */
         var keys = [];
         for (var key in this.webStorage) {
             // Only return keys that are for this app
@@ -124,8 +224,16 @@ var LocalStorageService = /** @class */ (function () {
         }
         return keys;
     };
-    LocalStorageService.prototype.length = function () {
+    /**
+     * @return {?}
+     */
+    LocalStorageService.prototype.length = /**
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
         var count = 0;
+        /** @type {?} */
         var storage = this.webStorage;
         for (var i = 0; i < storage.length; i++) {
             if (storage.key(i).indexOf(this.prefix) === 0) {
@@ -134,14 +242,27 @@ var LocalStorageService = /** @class */ (function () {
         }
         return count;
     };
-    LocalStorageService.prototype.remove = function () {
+    /**
+     * @param {...?} keys
+     * @return {?}
+     */
+    LocalStorageService.prototype.remove = /**
+     * @param {...?} keys
+     * @return {?}
+     */
+    function () {
         var _this = this;
         var keys = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             keys[_i] = arguments[_i];
         }
+        /** @type {?} */
         var result = true;
-        keys.forEach(function (key) {
+        keys.forEach((/**
+         * @param {?} key
+         * @return {?}
+         */
+        function (key) {
             if (!_this.isSupported) {
                 _this.warnings.next(LOCAL_STORAGE_NOT_SUPPORTED);
                 result = false;
@@ -159,10 +280,20 @@ var LocalStorageService = /** @class */ (function () {
                 _this.errors.next(e.message);
                 result = false;
             }
-        });
+        }));
         return result;
     };
-    LocalStorageService.prototype.set = function (key, value) {
+    /**
+     * @param {?} key
+     * @param {?} value
+     * @return {?}
+     */
+    LocalStorageService.prototype.set = /**
+     * @param {?} key
+     * @param {?} value
+     * @return {?}
+     */
+    function (key, value) {
         // Let's convert `undefined` values to `null` to get the value consistent
         if (value === undefined) {
             value = null;
@@ -192,8 +323,17 @@ var LocalStorageService = /** @class */ (function () {
         }
         return true;
     };
-    LocalStorageService.prototype.checkSupport = function () {
+    /**
+     * @private
+     * @return {?}
+     */
+    LocalStorageService.prototype.checkSupport = /**
+     * @private
+     * @return {?}
+     */
+    function () {
         try {
+            /** @type {?} */
             var supported = this.storageType in window
                 && window[this.storageType] !== null;
             if (supported) {
@@ -204,6 +344,7 @@ var LocalStorageService = /** @class */ (function () {
                 //
                 // "QUOTA_EXCEEDED_ERR: DOM Exception 22: An attempt was made
                 // to add something to storage that exceeded the quota."
+                /** @type {?} */
                 var key = this.deriveKey("__" + Math.round(Math.random() * 1e7));
                 this.webStorage.setItem(key, '');
                 this.webStorage.removeItem(key);
@@ -215,19 +356,52 @@ var LocalStorageService = /** @class */ (function () {
             return false;
         }
     };
-    LocalStorageService.prototype.setPrefix = function (prefix) {
+    /**
+     * @private
+     * @param {?} prefix
+     * @return {?}
+     */
+    LocalStorageService.prototype.setPrefix = /**
+     * @private
+     * @param {?} prefix
+     * @return {?}
+     */
+    function (prefix) {
         this.prefix = prefix;
         // If there is a prefix set in the config let's use that with an appended
         // period for readability:
+        /** @type {?} */
         var PERIOD = '.';
         if (this.prefix && !this.prefix.endsWith(PERIOD)) {
             this.prefix = !!this.prefix ? "" + this.prefix + PERIOD : '';
         }
     };
-    LocalStorageService.prototype.setStorageType = function (storageType) {
+    /**
+     * @private
+     * @param {?} storageType
+     * @return {?}
+     */
+    LocalStorageService.prototype.setStorageType = /**
+     * @private
+     * @param {?} storageType
+     * @return {?}
+     */
+    function (storageType) {
         this.storageType = storageType;
     };
-    LocalStorageService.prototype.setNotify = function (setItem, removeItem) {
+    /**
+     * @private
+     * @param {?} setItem
+     * @param {?} removeItem
+     * @return {?}
+     */
+    LocalStorageService.prototype.setNotify = /**
+     * @private
+     * @param {?} setItem
+     * @param {?} removeItem
+     * @return {?}
+     */
+    function (setItem, removeItem) {
         if (setItem != null) {
             this.notifyOptions.setItem = setItem;
         }
@@ -235,14 +409,29 @@ var LocalStorageService = /** @class */ (function () {
             this.notifyOptions.removeItem = removeItem;
         }
     };
-    LocalStorageService = __decorate([
-        core_1.Injectable({
-            providedIn: 'root'
-        }),
-        __param(0, core_1.Optional()), __param(0, core_1.Inject('LOCAL_STORAGE_SERVICE_CONFIG')),
-        __metadata("design:paramtypes", [Object])
-    ], LocalStorageService);
+    LocalStorageService.decorators = [
+        { type: Injectable, args: [{
+                    providedIn: 'root'
+                },] }
+    ];
+    /** @nocollapse */
+    LocalStorageService.ctorParameters = function () { return [
+        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LOCAL_STORAGE_SERVICE_CONFIG,] }] }
+    ]; };
+    /** @nocollapse */ LocalStorageService.ngInjectableDef = defineInjectable({ factory: function LocalStorageService_Factory() { return new LocalStorageService(inject(LOCAL_STORAGE_SERVICE_CONFIG, 8)); }, token: LocalStorageService, providedIn: "root" });
     return LocalStorageService;
 }());
-exports.LocalStorageService = LocalStorageService;
-//# sourceMappingURL=local-storage.service.js.map
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+export { LocalStorageModule, LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG as ɵa };
+
+//# sourceMappingURL=angular-2-local-storage.js.map

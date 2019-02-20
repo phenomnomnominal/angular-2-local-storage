@@ -1,1 +1,0 @@
-[{"__symbolic":"module","version":4,"metadata":{},"exports":[{"from":"./local-storage.module","export":["LocalStorageModule"]},{"from":"./local-storage.service","export":["LocalStorageService"]},{"from":"./local-storage.config.interface","export":["ILocalStorageServiceConfig"]},{"from":"./notify-options.interface","export":["INotifyOptions"]}]}]
