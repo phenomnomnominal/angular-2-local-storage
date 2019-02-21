@@ -1,6 +1,6 @@
 {
   "name": "angular-2-local-storage",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "LocalStorageService for Angular 2 with mostly the same API (and most of the code) from angular-local-storage",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
