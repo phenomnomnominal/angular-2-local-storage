@@ -1,10 +1,14 @@
 {
   "name": "angular-2-local-storage",
-  "version": "3.0.2",
+  "version": "4.0.0",
   "description": "LocalStorageService for Angular 2 with mostly the same API (and most of the code) from angular-local-storage",
   "main": "bundles/angular-2-local-storage.umd.js",
   "typings": "angular-2-local-storage.d.ts",
   "author": "Craig Spence <craigspence0@gmail.com>",
+  "keywords": [
+    "local storage",
+    "angular 10"
+  ],
   "contributors": [
     {
       "name": "Elwyn Benson",
@@ -21,33 +25,18 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": ">6.0.0",
-    "@angular/core": ">6.0.0",
-    "@angular/platform-browser": ">6.0.0",
+    "@angular/common": ">=7.0.0",
+    "@angular/core": ">=7.0.0",
+    "@angular/platform-browser": ">=7.0.0",
     "rxjs": ">6.0.0"
   },
-  "devDependencies": {
-    "@angular/common": "latest",
-    "@angular/compiler": "latest",
-    "@angular/compiler-cli": "latest",
-    "@angular/core": "latest",
-    "@angular/platform-browser": "latest",
-    "@angular/platform-server": "latest",
-    "ng-packagr": "^4.7.1",
-    "rxjs": "latest",
-    "tsickle": "^0.34.3",
-    "typescript": "latest",
-    "zone.js": "latest"
-  },
-  "module": "fesm5/angular-2-local-storage.js",
+  "module": "fesm2015/angular-2-local-storage.js",
   "es2015": "fesm2015/angular-2-local-storage.js",
-  "esm5": "esm5/angular-2-local-storage.js",
   "esm2015": "esm2015/angular-2-local-storage.js",
-  "fesm5": "fesm5/angular-2-local-storage.js",
   "fesm2015": "fesm2015/angular-2-local-storage.js",
   "metadata": "angular-2-local-storage.metadata.json",
   "sideEffects": false,
   "dependencies": {
-    "tslib": "^1.9.0"
+    "tslib": "^2.0.0"
   }
 }
